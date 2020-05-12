@@ -1,0 +1,27 @@
+{
+  "AsyncStorage": {
+    "fi": true,
+    "visitedPlaces": [
+      {
+        "name": "Oulun Yliopisto",
+        "TimeDate": "15.03.2020 10.02",
+        "UsedPhrase": "Saisinko makkaraa"
+      },
+      {
+        "name": "Sale Toppila",
+        "TimeDate": "15.03.2020 10.22",
+        "UsedPhrase": "No saako täältä makkaraa"
+      }
+    ],
+    "AllPlaces": [
+      {
+        "name": "Oulun Yliopisto",
+        "location": "192.168.0.1"
+      },
+      {
+        "name": "Sale Toppila",
+        "location": "65.045629, 25.433321"
+      }
+    ]
+  }
+}

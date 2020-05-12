@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Suomipassi",
+    "slug": "Suomipassi",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": ["ios", "android", "web"],
+    "description": "Project 5 is an upcoming application for international students in language and communication education. Application’s goal is to encourage these students to use Finnish language outside the class. Please feel free to test the application and give us any kind of feedback for us to improve it even further. Thank you!",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/Logo/logo1.png",
+    "splash": {
+      "image": "./assets/Logo/logo1.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.Suomipassi.Suomipassisovellus",
+      "buildNumber": "0.0.2"
+    },
+    "android": {
+      "permissions": ["VIBRATE", "CAMERA", "AUDIO_RECORDING"],
+      "package": "com.Suomipassi.Suomipassisovellus",
+      "versionCode": 1
+    }
+  }
+}

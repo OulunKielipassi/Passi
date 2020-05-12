@@ -1,0 +1,37 @@
+[
+  {
+    "place": "Villa Victor",
+    "date": "25.05.2012",
+    "key": "1"
+  },
+  {
+    "place": "Yliopiston kirjasto",
+    "date": "12.02.2019",
+    "key": "2"
+  },
+  {
+    "place": "Yliopiston kirjasto",
+    "date": "04.02.2018",
+    "key": "3"
+  },
+  {
+    "place": "Kaupunginteatteri",
+    "date": "11.11.2011",
+    "key": "4"
+  },
+  {
+    "place": "Sale Toppila",
+    "date": "21.09.2015",
+    "key": "5"
+  },
+  {
+    "place": "Subway Tuira",
+    "date": "21.01.2020",
+    "key": "6"
+  },
+  {
+    "place": "Coffee House",
+    "date": "30.07.2015",
+    "key": "7"
+  }
+]

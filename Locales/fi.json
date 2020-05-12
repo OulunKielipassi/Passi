@@ -1,0 +1,17 @@
+{
+  "PLACES": "Paikat",
+  "SHOW_MORE": "Näytä lisää",
+  "HISTORY": "Historia",
+  "RETURN_HOME": "Palaa takaisin alkuun",
+  "MAP": "Kartta",
+  "HOME": "Koti",
+  "PLACES_VISITED": "Käydyt paikat",
+  "TIMES_USED": "Käyttökerrat",
+  "BACK": "Takaisin",
+  "MAPINFOTEXT": "Tässä meillä on karttanäkymä, joka sisältää useita merkkejä, joissa on mahdollista käydä harjoittelemassa englantia. Jokaisessa paikassa on QR-koodi, jonka voi skannata, jolloin se tallentaa vierailusi kyseisessä paikassa.",
+  "MAPMARKERINFOTEXT": "Tämä ikoni näyttää paikat, joissa voit käydä harjoittelemassa englannin kieltäsi.",
+  "QRQUESTION" : "Skannaa QR koodi",
+  "INPUTQUESTION" : "Mitä sanoit?",
+  "BUTTONBACK" : "Palaa Takaisin",
+  "BUTTONSAVE" : "Tallenna"
+}

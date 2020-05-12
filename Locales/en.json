@@ -1,0 +1,17 @@
+{
+  "PLACES": "Places",
+  "SHOW_MORE": "Show more",
+  "HISTORY": "History",
+  "RETURN_HOME": "Return to home page",
+  "MAP": "Map",
+  "HOME": "Home",
+  "PLACES_VISITED": "Places visited",
+  "TIMES_USED": "Times Used",
+  "BACK": "Back",
+  "MAPINFOTEXT": "Here we have a map that includes multiple markers, where you can go and practice your Finnish. All these places have a QR-code which you can scan and save your visit.",
+  "MAPMARKERINFOTEXT": "This icon shows the place where you can go and practice your Finnish.",
+  "QRQUESTION" : "Scan QR code",
+  "INPUTQUESTION" : "What did you Say?",
+  "BUTTONBACK" : "Go back",
+  "BUTTONSAVE" : "Save"
+}
