@@ -27,7 +27,18 @@ import { t } from '../Locales'
 const ScreenWidth = Dimensions.get('window').width
 const ScreenHeight = Dimensions.get('window').height
 
+/**
+ * Homescreen is the first view of the application.
+ */
+
 const ListItem = (props) => {
+  /**
+   * @brief ListItems are items mapped on "Places" -portion of the home screen
+   * @param
+   *    name: name of the place
+   *    coordinates: coordinates of the place
+   *    distance: distance from current location to wanted place
+   */
   return (
     <TouchableOpacity
       key={props.name}
@@ -47,41 +58,17 @@ const ListItem = (props) => {
   )
 }
 
-async function updateList(list) {
-  /*  console.log(list)
-  try {
-    const val = AsyncStorage.getItem('AllPlaces')
-    if (val !== null) {
-      try {
-        await AsyncStorage.mergeItem('AllPlaces', JSON.stringify(list))
-        console.log('UPDATED')
-      } catch (e) {
-        console.log('ERROR HAPPENED ON UPDATING PLACES')
-        console.log(e)
-      }
-    }
-  } catch (error) {
-    console.log(error)
-  }
-  */
-  AsyncStorage.getItem('AllPlaces').then((value) => {
-    if (value !== null) {
-      try {
-        AsyncStorage.mergeItem('AllPlaces', JSON.stringify(list))
-        console.log('UPDATED')
-      } catch (e) {
-        console.log('ERROR HAPPENED ON UPDATING PLACES')
-        console.log(e)
-      }
-    }
-  })
-}
 const ArrangeList = (props) => {
+  /**
+   * @brief ArrangeList is a function to add distances to every element in array of places.
+   * In this function we also map the elements of the list, and present first five of them in the main view
+   * @param
+   *    list: list of all the location
+   *    location: users current location
+   */
   const list = props.list
   const location = props.location
-  var newList
   var dis = 0
-  //console.log(list[0])
   if (location !== null && list !== null) {
     list.map((item, key) => {
       key = item.coordinates.latitude
@@ -100,9 +87,7 @@ const ArrangeList = (props) => {
 
     list.sort((a, b) => a.distance > b.distance)
   }
-  //updateList(list)
   var cutList = list !== null ? list.slice(0, 5) : []
-  //const distances = list.map((item) => ())
   return cutList.map((item, index) => {
     return (
       <ListItem
@@ -117,6 +102,17 @@ const ArrangeList = (props) => {
 }
 
 class HomeScreen extends React.Component {
+  /**
+   * @brief Main class
+   * @param fi: boolean on validating which language to use(fi/en)
+   * @param flagUri: URI pointing to files for flag picture
+   * @param location: Users current location
+   * @param errorMessage:  errorMessage
+   * @param allLocations:  All possible locations(mapped from a file)
+   * @param visitedCount:  count of places visited in total
+   * @param visitedArray:  Array of places visited
+   * @param lastPlace:  String - last visited place
+   */
   constructor(props) {
     super(props)
     this.state = {
@@ -134,6 +130,9 @@ class HomeScreen extends React.Component {
   }
 
   _getLocation = async () => {
+    /**
+     * @brief function to get current location, and saving it to state "location"
+     */
     try {
       const { status } = await Permissions.getAsync(Permissions.LOCATION)
       if (status !== 'granted') {
@@ -151,6 +150,10 @@ class HomeScreen extends React.Component {
   }
 
   _getItem = async (key) => {
+    /**
+     * @brief helperfunction to get a value from asyncstorage for wanted key
+     * @param key: String key to fetch data with from asyncstorage
+     */
     try {
       await AsyncStorage.getItem(key, (err, value) => {
         if (err) {
@@ -168,6 +171,11 @@ class HomeScreen extends React.Component {
   }
 
   _setItem = async (key, lang) => {
+    /**
+     * @brief helperfunction to set data to asyncstorage
+     * @param key: String key
+     * @param lang: String wanted string to be saved for the key
+     */
     try {
       await AsyncStorage.setItem(key, JSON.stringify(lang))
     } catch (error) {
@@ -176,6 +184,9 @@ class HomeScreen extends React.Component {
   }
 
   _languageChanged(event) {
+    /**
+     * @brief function to handle changes in used language. Saves changes to asyncStorage and state. Also changes the flag icon accordingly
+     */
     this.setState({ fi: !this.state.fi })
     this._setItem('fi', this.state.fi)
     this.setState({
@@ -190,35 +201,40 @@ class HomeScreen extends React.Component {
   }
 
   changeScreen = () => {
-    console.log('changeeeeee')
+    /**
+     * @brief function to handle change of view.
+     * @param this.state.fi: passes this.state.fi as a parameter to next screen
+     */
     this.navigation.navigate('Map', { fi: this.state.fi })
   }
 
   _CountHistory = () => {
-    //SAMU TÄÄLLÄ ON TÄMÄ TIETO
-    var data = this.state.visitedPlaces
-    var luk = 0
-    this.setState({ visitedCount: luk })
-    if (data !== null) {
-      luk = data.split('place').length - 1
+    /**
+     * @brief function to parse visitedPlaces data fetched from asyncStorage, to be used as an array in homescreen and Historyscreen
+     * modified data is saved in state for keys "this.state.visitedArray" and "this.state.lastPlace"
+     */
+    if (this.mounted) {
+      var data = this.state.visitedPlaces
+      var luk = 0
       this.setState({ visitedCount: luk })
-      data = data.split('}')
-      data = data.map((m) => (m = m.substring(1)))
-      data = data.map((d) => d.split(','))
-      data = data.slice(0, -1)
-      data.forEach((el) => {
-        el.forEach((piece, index) => {
-          el[index] = piece.split(':').pop()
-          el[index] = el[index].replace(/^"(.+(?="$))"$/, '$1')
+      if (data !== null) {
+        luk = data.split('place').length - 1
+        this.setState({ visitedCount: luk })
+        data = data.split('}')
+        data = data.map((m) => (m = m.substring(1)))
+        data = data.map((d) => d.split(','))
+        data = data.slice(0, -1)
+        data.forEach((el) => {
+          el.forEach((piece, index) => {
+            el[index] = piece.split(':').pop()
+            el[index] = el[index].replace(/^"(.+(?="$))"$/, '$1')
+          })
         })
-      })
+      }
     }
-
-    //console.log(data[0][1])
     var lastItem = data !== null ? data.slice(-1)[0] : '-'
     this.setState({ visitedArray: data })
     this.setState({ lastPlace: lastItem })
-    //console.log(this.state.visitedArray)
   }
 
   async componentDidUpdate() {
@@ -231,6 +247,7 @@ class HomeScreen extends React.Component {
   }
 
   async componentDidMount() {
+    this.mounted = true
     this.timer = setInterval(() => {
       this._CountHistory()
     }, 5000)
@@ -253,7 +270,14 @@ class HomeScreen extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.mounted = false
+  }
+
   async getkeys() {
+    /**
+     * @brief helperfunction to fetch all the keys from asyncStorage, and log all possible values for every key
+     */
     try {
       const keys = await AsyncStorage.getAllKeys()
       console.log('keys are ' + keys)
@@ -270,7 +294,9 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        {/* topBar includes icon/button for language changes, and logo */}
         <View style={styles.topBar}>
+          {/* icon/button for language changes */}
           <TouchableOpacity
             onPress={() => {
               this._languageChanged(this)
@@ -281,10 +307,14 @@ class HomeScreen extends React.Component {
             <Image source={this.state.flagUri} style={styles.flagImage} />
           </TouchableOpacity>
         </View>
+
+        {/* Logo */}
         <Image
           source={require('../assets/Logo/Logo_2-01.png')}
           style={styles.image}
         />
+
+        {/* Places */}
         <View style={styles.placesBox}>
           <TouchableOpacity
             onPress={() =>
@@ -300,7 +330,6 @@ class HomeScreen extends React.Component {
               navigation={navigate}
             />
           </View>
-
           <TouchableOpacity
             onPress={() =>
               this.props.navigation.navigate('Places', { fi: this.state.fi })
@@ -312,6 +341,7 @@ class HomeScreen extends React.Component {
           </TouchableOpacity>
         </View>
 
+        {/* History */}
         <View style={styles.history}>
           <TouchableOpacity
             onPress={() =>
@@ -411,6 +441,9 @@ const styles = StyleSheet.create({
   },
 
   boxImage: {
+    /**
+     * Markerimage in an element on the list
+     */
     height: hp('5%'),
     flex: 1,
     alignSelf: 'center',
@@ -443,6 +476,9 @@ const styles = StyleSheet.create({
   },
 
   box: {
+    /**
+     * One item in the list
+     */
     flex: 1,
     color: '#D4DDE6',
 

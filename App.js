@@ -19,18 +19,15 @@ import HistoryScreen from './Screens/HistoryScreen/HistoryScreen'
 import PlacesScreen from './Screens/PlacesScreen'
 import { AuthSession } from 'expo'
 
-class LogoTitle extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('./assets/Ikonit/Kartta/Map_3-01.png')}
-        style={{ width: 30, height: 30 }}
-      />
-    )
-  }
-}
+/**
+ * App.Js is a basic class of Suomipassi, and it includes all the basic functionalities of the app.
+ * E.g. screens and navigation is created here
+ */
 
 const getTabBarIcon = (navigation, focused, tintColor) => {
+  /**
+   * getTabBarIcon function handles icons in bottom navigator
+   */
   const { routeName } = navigation.state
 
   let IconComponent = Ionicons
@@ -48,21 +45,33 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
     return (
       <Image
         source={require('./assets/Ikonit/Home/Home-01.png')}
-        style={{ width: 30, height: 30, opacity: focused ? 1 : 0.4 }}
+        style={{
+          width: 30,
+          height: 30,
+          opacity: focused ? 1 : 0.4,
+        }}
       />
     )
   } else if (routeName === 'Map') {
     return (
       <Image
         source={require('./assets/Ikonit/Kartta/Map_3-01.png')}
-        style={{ width: 30, height: 30, opacity: focused ? 1 : 0.4 }}
+        style={{
+          width: 30,
+          height: 30,
+          opacity: focused ? 1 : 0.4,
+        }}
       />
     )
   } else if (routeName === 'QRcode') {
     return (
       <Image
         source={require('./assets/Ikonit/QR/QR_2-01.png')}
-        style={{ width: 30, height: 30, opacity: focused ? 1 : 0.4 }}
+        style={{
+          width: 30,
+          height: 30,
+          opacity: focused ? 1 : 0.4,
+        }}
       />
     )
   }
@@ -88,10 +97,19 @@ const styles = StyleSheet.create({
 })
 
 const HomeStack = createStackNavigator(
+  /**
+   * HomeStack includes screens placed on homescreen
+   */
   {
-    Home: { screen: HomeScreen },
-    Places: { screen: PlacesScreen },
-    History: { screen: HistoryScreen },
+    Home: {
+      screen: HomeScreen,
+    },
+    Places: {
+      screen: PlacesScreen,
+    },
+    History: {
+      screen: HistoryScreen,
+    },
   },
   {
     mode: 'modal',
@@ -112,11 +130,20 @@ const config = {
 }
 
 export default createAppContainer(
+  /**
+   * AppContainer includes three views which can be found from bottom navigator
+   */
   createBottomTabNavigator(
     {
-      Map: { screen: mapScreen },
-      Home: { screen: HomeStack },
-      QRcode: { screen: QrScreen },
+      Map: {
+        screen: mapScreen,
+      },
+      Home: {
+        screen: HomeStack,
+      },
+      QRcode: {
+        screen: QrScreen,
+      },
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({

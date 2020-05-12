@@ -20,28 +20,13 @@ import { getDistance, getPreciseDistance } from 'geolib'
 
 import { t } from '../Locales'
 
-/* const ListItem = props => {
-  return (
-    <View style={styles.listItem}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-          //flex: 1
-        }}
-      >
-        <TouchableOpacity>
-          <Text style={{ fontSize: 20 }}>{props.place}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={{ fontSize: 20 }}>{props.date}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  )
-} */
-
 const ListItem = (props) => {
+  /**
+   * @brief ListItems are items mapped on "Places" -portion of the home screen
+   * @param name: name of the place
+   * @param coordinates: coordinates of the place
+   * @param distance: distance from current location to wanted place
+   */
   return (
     <TouchableOpacity
       style={styles.box}
@@ -61,11 +46,16 @@ const ListItem = (props) => {
 }
 
 const ArrangeList = (props) => {
+  /**
+   * @brief ArrangeList is a function to add distances to every element in array of places.
+   * In this function we also map the elements of the list, and present them in the main view
+   * @param
+   *    list: list of all the location
+   *    location: users current location
+   */
   const list = props.list
   const location = props.location
-  var newList
   var dis = 0
-  //console.log(list[0])
   if (location !== null && list !== null) {
     list.map((item, key) => {
       key = item.coordinates.latitude
@@ -84,8 +74,6 @@ const ArrangeList = (props) => {
 
     list.sort((a, b) => a.distance > b.distance)
   }
-  //updateList(list)
-  //const distances = list.map((item) => ())
   return list.map((item, index) => {
     return (
       <ListItem
@@ -115,6 +103,9 @@ export default class PlacesScreen extends Component {
   }
 
   _getLocation = async () => {
+    /**
+     * @brief function to get location and saving it to state.
+     */
     try {
       const { status } = await Permissions.getAsync(Permissions.LOCATION)
       if (status !== 'granted') {
@@ -146,7 +137,6 @@ export default class PlacesScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation
-    //console.log(this.state.fi)
     return (
       <View style={styles.container}>
         <Text style={styles.upperBottom}></Text>
@@ -165,115 +155,6 @@ export default class PlacesScreen extends Component {
               location={this.state.location}
               navigation={navigate}
             />
-            {/*
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Crecian</Text>
-              <Text style={styles.boxDistance}>100m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Villa Victor</Text>
-              <Text style={styles.boxDistance}>325m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Viikinkiravintola Harald</Text>
-              <Text style={styles.boxDistance}>525m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Kaupunginteatteri</Text>
-              <Text style={styles.boxDistance}>650m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Amarillo</Text>
-              <Text style={styles.boxDistance}>850m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Coffee House</Text>
-              <Text style={styles.boxDistance}>875m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Kaupungin kirjasto</Text>
-              <Text style={styles.boxDistance}>1000m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Noodle Bar 9</Text>
-              <Text style={styles.boxDistance}>1150m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Star Elokuvateatteri</Text>
-              <Text style={styles.boxDistance}>1250m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Subway Linnanmaa</Text>
-              <Text style={styles.boxDistance}>1700m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Yliopiston kirjasto</Text>
-              <Text style={styles.boxDistance}>1700m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.box}>
-              <Text style={styles.placeBoxText}>Prisma Linnanmaa</Text>
-              <Text style={styles.boxDistance}>1900m</Text>
-              <Image
-                source={require('../assets/Ikonit/Markkerit/Marker_1-01.png')}
-                style={styles.boxImage}
-              />
-            </TouchableOpacity>
-
-*/}
           </ScrollView>
         </View>
         <Text style={styles.bottomUpper}></Text>

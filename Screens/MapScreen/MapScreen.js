@@ -12,8 +12,13 @@ import Markers from '../../assets/Places.json'
 import FloatingButton from './FloatingButton'
 import Modal from 'react-native-modal'
 import { t } from '../../Locales'
+import * as Permissions from 'expo-permissions'
+
 import { Router } from 'react-native-router-flux'
 
+/**
+ * These are files for all different markers. We do provide 8 different ones, in case you wan't to change the used one.
+ */
 const marker1 = require('../../assets/Ikonit/Markkerit/Marker_1-01.png')
 const marker2 = require('../../assets/Ikonit/Markkerit/Marker_2-01.png')
 const marker3 = require('../../assets/Ikonit/Markkerit/Marker_3-01.png')
@@ -21,7 +26,6 @@ const marker5 = require('../../assets/Ikonit/Markkerit/Marker_5-01.png')
 const marker6 = require('../../assets/Ikonit/Markkerit/Marker_6-01.png')
 const marker7 = require('../../assets/Ikonit/Markkerit/Marker_7-01.png')
 const marker8 = require('../../assets/Ikonit/Markkerit/Marker_8-01.png')
-
 const markerImages = {
   1: marker1,
   2: marker2,
@@ -41,6 +45,10 @@ const initialRegion = {
 
 const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 }
 
+/**
+ * @brief function to get current location.
+ * In next version you might wan't to include permission requestin to here.
+ */
 export const getCurrentLocation = () => {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
@@ -66,6 +74,10 @@ class mapScreen extends React.Component {
   }
 
   _getItem = async (key) => {
+    /**
+     * @brief helperfunction to get a value from asyncstorage for wanted key
+     * @param key: String key to fetch data with from asyncstorage
+     */
     try {
       await AsyncStorage.getItem(key, (err, value) => {
         if (err) {
@@ -86,7 +98,6 @@ class mapScreen extends React.Component {
     if (this.state.ready) {
       setTimeout(() => this.map.mapview.animateToRegion(region), 10)
     }
-    //this.setState({ region });
   }
 
   checkLanguage = () => {
@@ -102,30 +113,13 @@ class mapScreen extends React.Component {
   }
 
   toggleModal = () => {
-    //this._languageChanged(this)
+    /**
+     * @brief Function to show modal
+     * modal includes info about the mapscreen
+     */
     this.setState({ isModalVisible: !this.state.isModalVisible })
     AsyncStorage.getItem('fi').then((fiValue) => {
       this.setState({ fi: fiValue })
-    })
-    //let fi = this._getItem('fi')
-    //Joo, piti kokeilla että tuleeko se läpi vaikka sijoittais muuttujaan
-    //this.setState({ fi: { fi } })
-    //this.getkeys()
-  }
-
-  handleCenter = () => {
-    const {
-      latitude,
-      longitude,
-      latitudeDelta,
-      longitudeDelta,
-    } = this.state.location
-    this.map.animateToRegion({
-      latitude,
-      longitude,
-      latitudeDelta,
-      longitudeDelta,
-      coordinates,
     })
   }
 
@@ -142,7 +136,6 @@ class mapScreen extends React.Component {
 
   _languageChanged(event) {
     this.setState({ fi: this._getItem('fi') })
-    //this._getItem('FIN')
   }
 
   async Getpermissions() {
@@ -170,7 +163,6 @@ class mapScreen extends React.Component {
   }
 
   componentDidUpdate() {
-    //setTimeout(() => this.map.animateToRegion(this.state.region))
     if (typeof this.props.navigation.state.params !== 'undefined') {
       coordinates = this.props.navigation.state.params.coordinates
       var coordinatesAndDelta = {

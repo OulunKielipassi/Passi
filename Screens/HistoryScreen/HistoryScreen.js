@@ -1,5 +1,13 @@
 import React, { Component, useState } from 'react'
-import { Button, StyleSheet, Text, View, Image, Dimensions, Modal } from 'react-native'
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  Modal,
+} from 'react-native'
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -7,52 +15,51 @@ import {
   FlatList,
 } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import placehistory from './placehistory'
 import { t } from '../../Locales'
 
 const ScreenWidth = Dimensions.get('window').width
 const ScreenHeight = Dimensions.get('window').height
 
-
 const ListItem = (props) => {
-    const [visible, setVisible] = useState(false)
+  /**
+   * @brief ListItems are items mapped on "Places" -portion of the home screen
+   * @param visible: state of modal(modal includes the phrase used, and is not visible by default)
+   * @param place: name of the visited place
+   * @param date: date of the visitation
+   * @param phrase: phrase used while visiting somewhere
+   */
+  const [visible, setVisible] = useState(false)
+  const buttonPress = () => {
+    show = show ? false : true
+    console.log('pressed button')
+    console.log(show)
+  }
 
-    const buttonPress = () => {
-      show = show ? false : true
-      console.log("pressed button")
-      console.log(show)
-    }
+  return (
+    <TouchableOpacity
+      style={styles.listItem}
+      onPress={() => {
+        setVisible(!visible)
+      }}
+    >
+      <Modal animated={true} transparent={true} visible={visible}>
+        <View style={styles.Modal}>
+          <ScrollView>
+            <Text style={styles.Text}>{props.place}</Text>
+            <Text style={styles.Text}>{props.date}</Text>
 
-    return (
-    <TouchableOpacity style={styles.listItem} onPress={()=> {setVisible(!visible)}}>
-      <Modal
-           animated = {true}
-           
-           transparent={true}
-           visible={visible}
-           >
-           
-           <View style={styles.Modal} >
-            
-             <ScrollView>
-             <Text style={styles.Text}>{props.place}</Text>
-             <Text style={styles.Text}>{props.date}</Text>
-             
-             <Text style={styles.Text}>{props.phrase}</Text>
-               
-             </ScrollView>
-             <Button
-                onPress={() => {
-                  setVisible(!visible)
-                }}
-                color ='#2C656B'
-                title ='Close'
-                
-               />
-           </View>
-           
-         </Modal>
-        <View
+            <Text style={styles.Text}>{props.phrase}</Text>
+          </ScrollView>
+          <Button
+            onPress={() => {
+              setVisible(!visible)
+            }}
+            color='#2C656B'
+            title='Close'
+          />
+        </View>
+      </Modal>
+      <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -66,10 +73,7 @@ const ListItem = (props) => {
           <Text style={{ fontSize: 19 }}>{props.date}</Text>
         </View>
       </View>
-      
-      
     </TouchableOpacity>
-    
   )
 }
 
@@ -84,24 +88,12 @@ export default class HistoryScreen extends Component {
       enabled: true,
       fi: this.props.navigation.state.params.fi,
       visitedPlaces: this.props.navigation.state.params.visitedArray,
-      
     }
   }
-
-  ButtonPressed = e => {
-    console.log(e)
-    this.setState({show: true})
-  }
-  ButtonNotPressed = e => {
-    console.log(e)
-    this.setState({show:false})
-  }
-  //const noPress = () => this.setState({show:false})
 
   async componentDidMount() {
     this.setState({ visitedPlaces: this.state.visitedPlaces.reverse() })
   }
-
 
   render() {
     const { navigate } = this.props.navigation
@@ -139,23 +131,21 @@ export default class HistoryScreen extends Component {
               </Text>
             </View>
           </View>
-          
+
           <FlatList
             style={{ flex: 1 }}
             data={this.state.visitedPlaces}
-            renderItem={({ item, index }) => (   
-              
-              <ListItem key={index} place={item[0]} date={item[1]} phrase={item[2]} func={this.ButtonPressed}/>
-              
-
+            renderItem={({ item, index }) => (
+              <ListItem
+                key={index}
+                place={item[0]}
+                date={item[1]}
+                phrase={item[2]}
+              />
             )}
-            keyExtractor={(item, index) => 'key' + index} 
-                
+            keyExtractor={(item, index) => 'key' + index}
           />
-         
         </View>
-
-        
       </View>
     )
   }
@@ -164,19 +154,19 @@ export default class HistoryScreen extends Component {
 const styles = StyleSheet.create({
   Text: {
     alignSelf: 'center',
-    fontSize: 19
+    fontSize: 19,
   },
   Modal: {
     backgroundColor: '#E8E8E8',
     borderRadius: 25,
     borderWidth: 3,
-    borderColor: '#2C656B', 
+    borderColor: '#2C656B',
     padding: 30,
-    
-    top : (ScreenHeight * 25)/100,
-    height: (ScreenHeight * 50)/100,
+
+    top: (ScreenHeight * 25) / 100,
+    height: (ScreenHeight * 50) / 100,
     width: (ScreenWidth * 80) / 100,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   safeArea: {
     backgroundColor: '#000',
@@ -197,7 +187,7 @@ const styles = StyleSheet.create({
     //height: ScreenHeight,
     bottom: 0,
     top: 0,
-    overflow: 'hidden'
+    overflow: 'hidden',
 
     //alignItems: 'center'
   },
