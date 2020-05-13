@@ -206,7 +206,7 @@ class mapScreen extends React.Component {
     const MarkerInfo = (props) => {
       return (
         <View style={{ flexDirection: 'row' }}>
-          <Image source={props.image} style={{ width: 50, height: 50 }} />
+          <Image source={'props.image'} style={{ width: 50, height: 50 }} />
           <View
             style={{
               flex: 1,
@@ -236,7 +236,7 @@ class mapScreen extends React.Component {
               title={marker.Title}
               description={marker.Description}
               key={index}
-              image={markerImages[marker.image]}
+              image={markerImages[3]}
               //anchor={{ x: 0.5, y: 0.5 }}
 
               //TODO: Find a way to make sure that tip of the marker is in wanted location in any situation.
